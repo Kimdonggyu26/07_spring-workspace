@@ -1,28 +1,28 @@
 package com.br.spring.ioc.xml;
 
 public class Student {
-
-	private String naeme;
+	
+	private String name;
 	private String academy;
 	private String classColor;
 	private Calculator calc;
 	
 	public Student() {}
 
-	public Student(String naeme, String academy, String classColor, Calculator calc) {
+	public Student(String name, String academy, String classColor, Calculator calc) {
 		super();
-		this.naeme = naeme;
+		this.name = name;
 		this.academy = academy;
 		this.classColor = classColor;
 		this.calc = calc;
 	}
 
-	public String getNaeme() {
-		return naeme;
+	public String getName() {
+		return name;
 	}
 
-	public void setNaeme(String naeme) {
-		this.naeme = naeme;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getAcademy() {
@@ -51,10 +51,7 @@ public class Student {
 
 	@Override
 	public String toString() {
-		return "Student [naeme=" + naeme + ", academy=" + academy + ", classColor=" + classColor + ", calc=" + calc
-				+ "]";
+		return "Student [name=" + name + ", academy=" + academy + ", classColor=" + classColor + ", calc=" + calc + "]";
 	}
-	
-	
 	
 }

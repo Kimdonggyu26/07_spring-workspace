@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+<!-- 
+	* Spring Bean Configuration File
+	- Bean(객체)을 등록할 수 있는 xml 파일
+	- 등록된 Bean은 컨테이너에 보관됨
+	
+	<bean class="등록시키고자하는 클래스명" id="이름"> 태그를 이용해서 빈으로 등록
+	해당 객체 생성 후 필드에 값을 넣고자 할 경우 setter 주입 또는 매개변수 생성자를 이용해서 주입 가능
+ -->
+ 
+ <!-- 
+ 	<bean> : 빈을 생성해주는 태그 (내부적으로 객체가 생성되어서 빈 컨테이너에 등록 됨)
+ 		- class : 빈으로 등록하고자 하는 클래스명 (풀클래스명)
+ 		- id 		: 해당 빈의 이름 (고유)
+ 		
+  -->
+ 
+ <bean class="com.br.spring.ioc.xml.Calculator" id="calculator" />
+ <!-- 
+ 	내부적으로 아래와 같은 코드가 실행됨
+ 	Calculator calculator = new Calculator();
+  -->
+  
+  <!--
+   * setter Injection(주입) 예시
+   		<property> : 생성된 객체의 필드에 setter메소드로 값을 주입할 때 사용되는 태그
+   			- name 	: 값을 주입하고자 하는 필드명
+   			- value : 담고자하는 값
+   			- ref   : 레퍼런스 타입의 값
+   -->
+  <bean class="com.br.spring.ioc.xml.Student" id="student1">
+  	<property name="name" value="홍길동" />
+  	<property name="academy" value="구디아카데미" />
+  	<property name="classColor" value="빨강색" />
+  	<property name="calc" ref="calculator" />
+  </bean>
+  
+  <!-- Namespace로 p 추가하면 property 태그 대신 p:필드명 속성으로 값 주입 가능 -->
+  <bean class="com.br.spring.ioc.xml.Student" id="student2"
+  		  p:name="김말똥"
+  		  p:academy="구디아카데미"
+  		  p:classColor="파랑색"
+  		  p:calc-ref="calculator" />
+  		  
+  <!-- * constructor Injection 예시 -->
+  <bean class="com.br.spring.ioc.xml.Student" id="student3">
+  	<constructor-arg value="강개순" />
+  	<constructor-arg value="구디아카데미" />
+  	<constructor-arg value="초록색" />
+  	<constructor-arg ref="calculator" />
+  </bean>
+  <!-- 
+  	내부적으로 아래와 같은 코드가 실행됨
+  	Student student3 = new Student("강개순", "구디아카데미", "초록색", calculator);
+   -->
+  <bean class="com.br.spring.ioc.xml.StudentDao" id="studentDao"/> <!--  scope="singleton" 기본값 -->
+
+</beans>

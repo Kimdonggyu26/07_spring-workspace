@@ -2,6 +2,20 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
 	
+	<!-- 
+		* Maven (pom.xml)
+		  1. 프로젝트 관리 도구
+		  2. 프로젝트의 전반적인 버전 및 라이브러리, 플러그인들을 통합해서 관리하는 도구 
+		  3. 라이브러리 종속성의 특징으로 dependency 태그로 사용할 라이브러리 작성시
+		     메이븐 저장소로부터 자동으로 라이브러리가 다운되며 추가됨
+		     => Maven Dependencies 로 확인 가능
+		  4. mvnrepository.com 사이트에서 라이브러리 검색 가능 
+		  5. 유의사항
+		  	 1) pom.xml을 자주 수정하고 저장하면 매번 다운로드가 진행되므로 오류날 확률이 커짐 (한꺼번에 작성하고 저장하는걸 권장)
+		  	 2) 다운로드 중에는 최대한 안건들이는게 좋음 (progress 확인)
+		  	 3) 반영이 안되는 듯 보여지는 프로젝트 우클릭 - [Maven] - [update Project] 실행 
+	-->
+	
 	<!-- 1. 프로젝트 정보 -->
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.br</groupId>
@@ -10,10 +24,10 @@
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 	
-	<!--
-	 2. properties
-	 		해당 xml 파일 내에서 사용하고자 하는 버전들을 변수에 담아두는 태그
-	 -->
+	<!-- 
+		2. properties 
+		   해당 xml 파일 내에서 사용하고자 하는 버전들을 변수에 담아두는 태그 
+	-->
 	<properties>
 		<java-version>11</java-version>
 		<org.springframework-version>5.3.27</org.springframework-version>
@@ -23,9 +37,9 @@
 	
 	<!-- 
 		3. dependencies
-			 사용하고자 하는 라이브러리(jar)들
-			 => maven에 의해서 저장소로부터 자동으로 다운로드가 진행 됨
-		 -->
+		   사용하고자 하는 라이브러리(jar)들
+		   => maven에 의해서 저장소로부터 자동으로 다운로드가 진행됨 
+	-->
 	<dependencies>
 	
 		<!-- Spring -->
@@ -119,6 +133,7 @@
 			<scope>provided</scope>
 		</dependency>
 		-->
+		
 		<!-- servlet-api, jsp-api 변경 -->
 		<dependency>
 		    <groupId>javax.servlet</groupId>
@@ -132,6 +147,7 @@
 		    <version>2.3.3</version>
 		    <scope>provided</scope>
 		</dependency>
+				
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
@@ -144,8 +160,11 @@
 			<artifactId>junit</artifactId>
 			<version>4.13.2</version> <!-- 4.13.2로 변경 -->
 			<scope>test</scope>
-		</dependency>        
+		</dependency>     
+		   
 	</dependencies>
+	
+	
 	
 	
     <build>
