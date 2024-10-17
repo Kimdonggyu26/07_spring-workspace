@@ -1,0 +1,71 @@
+## 스프링 특징 3 ##
+
+* MVC 패턴
+- 디자인 패턴 중 하나로 하나의 애플리케이션을 구현할 때 구성요소들을
+  Model, View, Controller로 역할을 구분하는 패턴 
+- 클래스마다 로직이 분리되어 있지 않을 경우 문제점 파악 어렵, 유지보수에도 불편함 
+  => MVC 패턴을 적용하면 로직되어 있기 때문에 유지보수에 용이해짐 
+     ex) 요청 처리 관련 문제 발생 => Controller클래스만 수정
+         화면 관련 문제 발생 => jsp파일만 수정 
+         
+> Model			 : 애플리케이션의 데이터와 관련된 역할을 수행 
+							 Java파일 (src/main/java 에서 작업)
+	
+> View			 : 애플리케이션의 시각적인 요소와 관련된 역할 수행 (화면, 사용자 인터페이스 요소 등)
+							 JSP파일  (src/main/webapp/WEB-INF/views 에서 작업)
+
+> Controller : 애플리케이션의 요청처리 관련된 역할 수행 
+							 Model과 View 사이에서 데이터 흐름을 제어한다고 보면됨
+							 Java파일 (src/main/java 에서 작업)
+							 
+
+* Spring MVC 주요 구성요소
+- DispatcherServlet : 클라이언트의 요청을 받고 요청에 맞는 컨트롤러가 리턴한 결과값을 가지고 응답을 생성해줌
+- HandlerMapping    : 클라이언트의 요청 url을 어떤 컨트롤러가 처리할지 결정해줌 
+- Controller		    : 클라이언트의 요청을 처리한 뒤, 결과를 DispatcherServlet에게 리턴해줌 
+- ModelAndView		  : 컨트롤러가 처리한 결과 정보 및 뷰 선택에 필요한 정보들을 담을수 있는 객체
+- ViewResolver      : 컨트롤러의 처리 결과를 생성할 View 결정해줌 
+
+* Spring MVC 동작원리
+1) 클라이언트 요청 (request)
+   http://localhost:8888/mvc/member/list.do
+   
+2) 스프링에서 제공하는 DispatcherServlet이 해당 요청을 먼저 받아줌 
+
+3) DispatcherServlet이 요청처리할 Controller를 찾아주는 HandlerMapping을 호출 
+
+4) HandlerMapping이 요청처리할 Controller 찾아서 해당 메소드를 호출 
+
+   * 요청시 전달되는 파라미터 처리법
+     - Spring 사용전 : HttpServletRequest객체로 .getParameter메소드로 뽑아서 세팅 
+     - Spring 사용후 : @RequestParam 또는 커맨드 객체방식으로 처리 
+
+5) Controller는 비즈니스 로직 처리를 담당하는 Service 호출 
+
+6) 요청처리 완료 후 Controller에서는 응답을 처리할 Model 과 View 세팅
+		
+		* 응답 결과 처리법
+		  - Spring 사용전 : 응답페이지(포워딩jsp)에서 필요한 데이터를 request에 담은(setAttribute) 후 포워딩
+		  - Spring 사용후 
+		  	1) 응답페이지에서 필요한 데이터를 Model 객체에 담기, 응답뷰를 반환 
+		  	2) 응답페이지에서 필요한 데이터를 ModelAndView 객체에 담기 + 뷰에 대한 정보도 담기, 해당 객체를 반환 
+		  	
+		  	> Model : 내부적으로 request를 사용하는 객체로 
+		  						보안(정보의 탈취없이, 안정적)부분이 향상되었음 
+
+7) Controller에서는 Model, 뷰에 대한정보를 다시 DispatcherServlet으로 반환 
+
+8) DispatcherServlet이 해당 뷰 정보를 ViewResolver에게 전달 
+
+9) ViewResolver는 전달받은 뷰 정보를 가지고 뷰명앞에 prefix, 뒤에 suffix값 붙여서
+
+   응답 뷰에 대한 전체 정보를 완성시킴
+   
+10) 해당 응답 뷰가 로드되서 클라이언트에게 보여짐 
+
+
+
+
+
+				 
+							 

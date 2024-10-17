@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
+	
+	
+	<annotation-driven />
+	<!-- 
+		* <annotaion-driven>
+		- @Controller 어노테이션을 활성화해주는 태그
+		- Spring MVC에서 각 요청에 따른 Controller를 실행시키기 위한 
+		  HandlerMapping과 HandlerAdapter 를 자동으로 bean으로 등록해줌
+	-->
+
+	<resources mapping="/resources/**" location="/resources/" />
+	<resources mapping="/assets/**" location="/assets/" />
+	<!-- 
+		* <resources>
+		-	정적인 자원(이미지, 오디오, 비디오, css, js 등)들을 관리하는 디렉토리의 경로를 설정해두는 태그
+		-	여러개 작성 가능
+	 -->
+
+
+
+	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
+	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/WEB-INF/views/" />
+		<beans:property name="suffix" value=".jsp" />
+	</beans:bean>
+	
+	<context:component-scan base-package="com.br.mvc" />
+	<!-- 
+		* <context:component-scan>
+		- base-package에 작성되어있는 패키지를 가지고 있는 모든 클래스들을 스캔하면서 (빈 스캐닝)
+		  @Component 타입의 어노테이션이 붙어있는 클래스들을 자동으로 빈으로 등록해줌
+		  
+		  > MVC 역할별 세분화된 어노테이션들이 존재함
+		  @Component
+		   ㄴ @Controller
+		   ㄴ @Service
+		   ㄴ @Repository
+	-->
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</beans:beans>
