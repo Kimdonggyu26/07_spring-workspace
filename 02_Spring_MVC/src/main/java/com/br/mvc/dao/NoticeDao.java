@@ -31,6 +31,7 @@ public class NoticeDao {
 	public int updateNotice(NoticeDto n) {
 		
 		int result = 0;
+		//dbList.set(n.getNo()-1, n); // dbList의 글번호가 순차적이라서 가능함
 		
 		for(NoticeDto a : dbList) {
 			if(a.getNo() == n.getNo()) {
@@ -41,6 +42,7 @@ public class NoticeDao {
 				result = 1;
 			}
 		}
+		
 		return result;
 	}
 	

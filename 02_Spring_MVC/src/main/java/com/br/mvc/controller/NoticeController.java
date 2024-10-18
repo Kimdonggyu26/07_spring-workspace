@@ -5,8 +5,10 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.br.mvc.dto.NoticeDto;
 import com.br.mvc.service.NoticeService;
@@ -88,8 +90,23 @@ public class NoticeController {
 		return "notice/modifyForm";
 	}
 	
-	@GetMapping("/update.do")
-	public String updateModify(NoticeDto n) {
+	
+	
+	// ========= redirect시 그때 포워딩 되는 페이지에 필요한 데이터 담는 방법 ==========
+	/*
+	 * Model 영역은 requestScope이기 때문에 당장 포워딩되는 jsp에서만 사용 가능함
+	 * 즉, redirect로 다른 controller가 실행되는 순간 현재 만들어진 Model은 소멸됨
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 */
+	
+	
+	@PostMapping("/update.do")
+	public String noticeUpdate(NoticeDto n, RedirectAttributes ra) {
 		
 		System.out.println(n);
 		
@@ -97,7 +114,13 @@ public class NoticeController {
 		
 		int result = noticeService.updateNotice(n);
 		
-		return "redirect:detail.do?no=" + noticeNo;
+		if(result > 0) {
+		 // model.addAttribute("alertMsg", "성공적으로 수정되었습니다.");
+			ra.addFlashAttribute("alertMsg", "성공적으로 수정되었습니다");
+			return "redirect:detail.do?no=" + noticeNo;
+		}else {
+			return "redirect:/";
+		}
 	}
 	
  	

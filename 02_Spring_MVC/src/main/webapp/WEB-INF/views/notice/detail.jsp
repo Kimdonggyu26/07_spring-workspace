@@ -10,6 +10,12 @@
 </head>
 <body>
 
+	<c:if test="${ not empty alertMsg }">
+		<script>
+			alert('${ alertMsg }');
+		</script>
+	</c:if>
+
 	<h3>공지사항 상세 페이지</h3>
 
 	<c:choose>

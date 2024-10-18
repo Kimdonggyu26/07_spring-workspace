@@ -10,7 +10,7 @@
 </head>
 <body>
 
-		<form action="${ contextPath }/notice/update.do">
+		<form action="${ contextPath }/notice/update.do" method="POST">
 			번호 : ${ n.no } <br>
 			제목 : <input type="text" name="title" value="${ n.title }"> <br>
 			내용 : <input type="text" name="content" value="${ n.content }"> <br>
