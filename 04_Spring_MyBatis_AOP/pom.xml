@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
-	
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.br</groupId>
-	<artifactId>ajax</artifactId>
-	<name>03_Spring_Logging_AJAX</name>
+	<artifactId>sbatis</artifactId>
+	<name>04_Spring_MyBatis_AOP</name>
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 	
@@ -143,6 +142,39 @@
 		    <artifactId>jackson-databind</artifactId>
 		    <version>2.14.2</version>
 		</dependency>
+		
+		<!-- * DB관련 라이브러리 -->
+		<dependency>
+		    <groupId>com.oracle.database.jdbc</groupId>
+		    <artifactId>ojdbc8</artifactId>
+		    <version>23.2.0.0</version>
+		</dependency>
+		<!-- 2) -->
+		<dependency>
+		    <groupId>org.springframework</groupId>
+		    <artifactId>spring-jdbc</artifactId>
+		    <version>${org.springframework-version}</version>
+		</dependency>
+		<!-- 3) mybatis -->
+		<dependency>
+		    <groupId>org.mybatis</groupId>
+		    <artifactId>mybatis</artifactId>
+		    <version>3.5.14</version>
+		</dependency>
+		<!-- 4) mybatis-spring -->
+		<dependency>
+		    <groupId>org.mybatis</groupId>
+		    <artifactId>mybatis-spring</artifactId>
+		    <version>2.0.6</version>
+		</dependency>
+		<!-- 5) commons-dbcp -->
+		<dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-dbcp2</artifactId>
+		    <version>2.9.0</version>
+		</dependency>
+		
+		
 				
 				    
 	</dependencies>

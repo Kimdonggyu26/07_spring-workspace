@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+<!-- 
+         root-context.xml
+   1. Server start 와 동시에 web.xml 파일에 기술된   ContextLoaderListener에 의해 pre-loading(제일 먼저 읽혀짐)되는 문서
+   2. Spring bean Configuration File로써 빈을 등록하는 파일임
+   3. 즉, 서버 구동과 동시에 등록하고자 하는 빈들이 있다면 해당 파일에 작성하면됨
+       주로 db관련 빈, 트랜잭션 처리,내외부 모듈 연동 등 (스프링에서 제공하는 서비스들에 대한 설정 정보)
+
+ -->      
+    <bean class="org.apache.commons.dbcp2.BasicDataSource" id="dataSource" destroy-method="close">
+       <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />   
+       <property name="url" value="jdbc:oracle:thin:@localhost:1521:xe" />   
+       <property name="username" value="sbatis" />   
+       <property name="password" value="sbatis" />   
+    </bean>
+ 
+    <bean class="org.mybatis.spring.SqlSessionFactoryBean" id="sqlSessionFactory">
+       <property name="configLocation" value="classpath:config/mybatis-config.xml" />
+       <property name="dataSource" ref="dataSource" />
+    </bean>
+ 
+   <bean class="org.mybatis.spring.SqlSessionTemplate" id="sqlSession">
+      <constructor-arg ref="sqlSessionFactory"/>
+   
+   </bean>
+      
+</beans>

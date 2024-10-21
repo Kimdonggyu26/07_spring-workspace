@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	
+
+	<appender class="ch.qos.logback.core.ConsoleAppender" name="consoleLog">
+		<encoder>
+			<pattern>%-5level: [%date{yyyy-MM-dd HH:mm:ss}] [%logger:%line] - %msg%n</pattern>
+		</encoder>
+	</appender>
+	
+	<appender class="ch.qos.logback.core.FileAppender" name="fileLog">
+		<file>/logs/ajax.log</file>
+		<append>true</append>
+		<immediateFlush>true</immediateFlush>
+		<encoder>
+			<pattern>%-5level: [%date{yyyy-MM-dd HH:mm:ss}] [%logger:%line] - %msg%n</pattern>
+		</encoder>
+	</appender>
+	
+	<!-- 특정 조건을 넘어서면 새로운 파일로 로깅 -->
+	<appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="rollingFileLog">
+		<!-- rollingPolicy : 어떤 조건으로 파일을 생성 또는 사라지게 할건지 보관정책 -->
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<fileNamePattern>/logs/ajax-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+			<maxFileSize>10MB</maxFileSize>
+			<maxHistory>30</maxHistory>
+			<totalSizeCap>10GB</totalSizeCap>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%-5level: [%date{yyyy-MM-dd HH:mm:ss}] [%logger:%line] - %msg%n</pattern>
+		</encoder>
+	</appender>
+	
+	
+	<!-- 3) root logger와 logger 함께 사용하기 -->
+	<logger name="org.springframework" level="INFO" />
+	<logger name="com.br.sbatis" level="DEBUG" />
+	
+	<root level="WARN"> <!-- 기본 로그 레벨은 WARN 설정 -->
+		<appender-ref ref="consoleLog" />
+	</root>
+	
+	
+	
+	
+	
+	
+</configuration>

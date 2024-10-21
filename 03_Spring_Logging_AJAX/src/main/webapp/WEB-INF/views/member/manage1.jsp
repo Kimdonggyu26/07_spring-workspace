@@ -21,12 +21,12 @@
 		
 		<button type="button" onclick="fn_ajax1();">조회1(아이디, 비번으로 이름 조회)</button>
 		<button type="button" onclick="fn_ajax2();">조회2(아이디, 비번으로 이름 조회)</button>
-		<button type="button" onclick="">조회3(번호로 회원전체정보 조회)</button>
-		<button type="button" onclick="">전체조회</button>
+		<button type="button" onclick="fn_ajax3();">조회3(번호로 회원전체정보 조회)</button>
+		<button type="button" onclick="fn_ajax4();">전체조회</button>
 		<br>
 		
-		<button type="button" onclick="">번외1</button>
-		<button type="button" onclick="">번외2</button>
+		<button type="button" onclick="fn_etc1();">번외1(응답데이터가 다수일 경우)</button>
+		<button type="button" onclick="fn_etc2();">번외2(전달값 다수를 Map으로 받아보기)</button>
 		
 	</form>
 	
@@ -75,6 +75,91 @@
 				}
 			})
 			
+		}
+		
+		// 번호로 회원 전체정보 조회
+		function fn_ajax3(){
+			$.ajax({
+				url: '${ contextPath }/member1/detail3.do',
+				type: 'GET',
+				data: {no: $("input[name=userNo]").val()},
+				success: function(resData){
+					console.log(resData); // {}					
+					
+					let value = '<ul>'
+											+ '<li>번호: ' + resData.userNo + '</li>'
+											+ '<li>아이디: ' + resData.userId + '</li>'
+										  + '<li>이름: '	+ resData.userName + '</li>'
+										+ '</ul>';
+										
+					$('#result').html(value);
+				},
+				error: function(){
+					console.log('조회3 버튼에 대한 ajax 통신 실패');
+				}
+			})
+		}
+		
+		// 회원 전체정보 조회
+		function fn_ajax4(){
+			$.ajax({
+				url: '${contextPath}/member1/list.do',
+				success: function(resData){
+					console.log(resData);	//[{}, {}, {}]
+					
+					let table = "<table border='1'>";
+					for(let i = 0; i < resData.length; i++){
+						table += '<tr>'
+									 + 		'<td>' + resData[i].userNo + '</td>' 
+									 + 		'<td>' + resData[i].userId + '</td>'
+									 + 		'<td>' + resData[i].userName + '</td>'
+									 + '</tr>';
+					}
+					table += '</table>';
+					
+					$('#result').html(table);
+					
+				},
+				error: function(){
+					console.log('전체조회 버튼에 대한 ajax 통신 실패');
+				}
+			})
+		}
+		
+		// 응답데이터가 다수일 경우 Map에 담아서 반환
+		function fn_etc1(){
+			$.ajax({
+				url: '${ contextPath }/member1/etc1.do',
+				success: function(resData){
+					console.log(resData);
+					console.log('no', resData.no);
+					console.log('list', resData.list);
+					console.log('m', resData.m);
+				},
+				error: function(){
+					console.log('번외1 버튼에 대한 ajax 통신 실패');
+				}
+			})
+		}
+		
+		// 요청시 전달되는 다수의 파라미터들을 Map으로 받아보기
+		function fn_etc2(){
+			$.ajax({
+				url: '${ contextPath }/member1/etc2.do',
+				type: 'post',
+				data: JSON.stringify( {
+					no: 10,
+					name: '아무개',
+					arr: ['홍길동', '김말똥', 20]
+				} ),
+				contentType: 'application/json',
+				success: function(){
+					
+				},
+				error: function(){
+					
+				}				
+			})
 		}
 	</script>
 	
