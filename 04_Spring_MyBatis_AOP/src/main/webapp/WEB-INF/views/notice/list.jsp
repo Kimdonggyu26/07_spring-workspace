@@ -17,24 +17,37 @@
 			존재하는 공지사항이 없습니다	
 		</c:when>
 		<c:otherwise>
-			<table border="1">
-				<thead>
-					<tr>
-						<th>번호</th>
-						<th>제목</th>
-						<th>내용</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach var="n" items="${ list }">
+		
+			<form action="${ contextPath }/notice/delete.do" method="POST">
+				<table border="1">
+					<thead>
 						<tr>
-							<td>${ n.no }</td>						
-							<td>${ n.title }</td>						
-							<td>${ n.content }</td>						
+							<th></th>
+							<th>번호</th>
+							<th>제목</th>
+							<th>내용</th>
 						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
+					</thead>
+					<tbody>
+						<c:forEach var="n" items="${ list }">
+							<tr>
+								<td><input type="checkbox" name="deleteNo" value="${ n.no }"></td>
+								<td>${ n.no }</td>						
+								<td><a href="${ contextPath }/notice/detail.do?no=${ n.no }">${ n.title }</a></td>						
+								<td>${ n.content }</td>						
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+				
+				<button type="submit">삭제</button> <br>
+			</form>
+			
+			
+			<a href="${ contextPath }/notice/enroll.do">글 작성페이지로 이동</a>
+			
+			
+			
 		</c:otherwise>
 	</c:choose>
 

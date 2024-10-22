@@ -18,4 +18,23 @@ public class NoticeDao {
 	public List<NoticeDto> selectNoticeList(){
 		return sqlSession.selectList("noticeMapper.selectNoticeList");
 	}
-}
+	
+	public NoticeDto selectNoticeByNo(int noticeNo) {
+		return sqlSession.selectOne("noticeMapper.selectNoticeByNo", noticeNo);
+	}
+	
+	public int insertNotice(NoticeDto n) {
+		return sqlSession.update("noticeMapper.insertNotice", n);
+	}
+	
+	public int updateNotice(NoticeDto n) {
+		return sqlSession.insert("noticeMapper.updateNotice", n);
+	}
+	
+	public int deleteNotice(String[] deleteNo) {
+		return sqlSession.delete("noticeMapper.deleteNotice", deleteNo);
+	}
+	
+}	
+	
+

@@ -17,5 +17,55 @@
 		 order
 		    by no desc
 	</select>
+	
+	<!-- 번호로 공지사항 조회 -->
+	<select id="selectNoticeByNo" resultMap="noticeResultMap">
+		select
+					 no
+				 , title
+				 , content
+			from notice
+		 where no = #{noticeNo}
+	</select>
+	
+	<!-- 공지사항 등록 -->
+	<insert id="insertNotice">
+		insert
+		  into notice
+		  (
+		  	no
+		  , title
+		  , content
+		  )
+		  values
+		  (
+		  	seq_notice.nextval
+		  , #{title}
+		  , #{content}
+		  )
+	</insert>
+	
+	<!-- 공지사항 수정 -->
+	<update id="updateNotice">
+		update
+				   notice
+			 set title = #{title}
+			   , content = #{content}
+		 where no = #{no}
+	</update>
+
+	<delete id="deleteNotice">
+		delete 
+					 notice
+	 <where>
+	    <foreach item="deleteNo" collection="array"
+	        		 open="no in (" separator="," close=")">
+	          #{deleteNo}
+	    </foreach>
+	  </where>
+	  
+	</delete>
+	<!-- 공지사항 일괄삭제 -->
+		
 
 </mapper>
