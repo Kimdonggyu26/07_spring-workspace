@@ -1,4 +1,6 @@
-package com.br.sbatis.dto;
+package com.br.spring.dto;
+
+import java.util.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,13 +11,16 @@ import lombok.ToString;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Setter
 @Getter
+@Setter
 @ToString
 @Builder
 public class NoticeDto {
+	
+	private int noticeNo;
+	private String noticeTitle;
+	private String noticeWriter;
+	private String noticeContent;
+	private String registDt;
 
-	private int no;
-	private String title;
-	private String content;
 }

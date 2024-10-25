@@ -1,0 +1,37 @@
+  ## 스프링 특징 4 ##
+  
+  * AOP (Aspect Oriented Programming)
+  1) 관점 지향 프로그래밍
+  2) 핵심로직(비즈니스로직)마다 매번 반복해서 공통적으로 처리해야되는 로직(로깅, 트랜잭션 등)을
+     한번만 정의해두고 내가 원하는 시점에 반복 적용 시키는 프로그래밍 방식 
+  3) 개발이 다 끝난 후에 핵심로직을 건들지 않고도 공통로직만을 따로 작성해서 원하는 시점에 실행시킬 수 있음 
+  
+  * AOP 관련 용어
+  1) JoinPoint : AOP을 적용시킬 대상의 전체 메소드							 ex) Controller 또는 ServiceImpl의 모든메소드 (삽입, 수정, 삭제, 조회)
+  2) PointCut  : AOP을 적용시킬 특정 메소드 (핵심로직)					 ex) 그 중에 로깅 또는 트랜잭션이 필요한 메소드 (삽입, 수정, 삭제)
+  3) Advice		 : AOP 동작 자체 (즉, 실행시키고자 하는 공통로직)  ex) 로깅, 트랜잭션 처리
+  
+  * Advice 동작 시점
+  1) @Before : PointCut 동작 이전
+  2) @After  : PointCut 동작 이후 
+  3) @Around : PointCut 동작 이전과 이후
+  4) @AfterReturning : PointCut 정상 완료 이후
+  5) @AfterThrowing  : PointCut 예외 발생 이후 
+  
+  * Adivce 동작 순서 
+  1) Before Advice : Advice -> PointCut
+  2) After Advice  : PointCut -> Advice
+  3) Around Advice : Advice -> PointCut -> Advice
+  
+  * Pointcut을 결정하는 표현식 작성법
+  1) 형식
+     execution (반환타입 패키지.클래스.메소드(매개변수))
+  2) 반환타입
+     - *     : 모든 반환타입
+     - void  : void 타입
+     - !void : void 제외한 타입
+  3) 매개변수
+     - *  : 1개의 모든 매개변수
+     - .. : 모든 매개변수
+  
+   

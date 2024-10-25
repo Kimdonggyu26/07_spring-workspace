@@ -41,6 +41,26 @@ public class NoticeServiceImpl implements NoticeService {
 		return noticeDao.deleteNotice(deleteNo);
 	}
 
+	@Override
+	public int transactionTest() {
+		
+		int result = noticeDao.insertNotice(NoticeDto.builder()
+													 .title("트랜잭션테스트제목2")
+													 .content("트랜잭션테스트내용2")
+													 .build()); // title, content 필드에 값을 담은 Notice객체 생성
+		
+		if(result > 0) {
+			result = noticeDao.insertNotice(NoticeDto.builder()
+													 .content("실패될거임")
+													 .build()); // content 필드에만 값을 담은 Notice객체 생성
+		}
+		
+		// 둘 중에 하나라도 실패 (exception발생)하면 전체 취소(rollback) 되어야 함
+		// => 기본적으로 트랜잭션처리가 제대로 진행되지 않음
+		
+		return result;
+	}
+
 	
 	
 }

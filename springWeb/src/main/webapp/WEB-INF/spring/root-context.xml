@@ -1,61 +1,48 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
 	
-	<!-- 
-		* root-context.xml
-		1. Server start와 동시에 web.xml 파일에 기술된 ContextLoaderListener에 의해 pre-loading(제일 먼저 읽혀짐)되는 문서
-		2. Spring Bean Configuration File로써 빈을 등록하는 파일임 
-		3. 즉, 서버 구동과 동시에 등록하고자 하는 빈들이 있다면 해당 파일에 작성하면됨 
-		   주로 db관련 빈, 트랜잭션 처리, 내외부 모듈 연동 등 작성함 (스프링에서 제공하는 서비스들에 대한 설정 정보)
-	-->
-	
+	<!-- * mybatis 사용을 위한 빈 -->
 	<bean class="org.apache.commons.dbcp2.BasicDataSource" id="dataSource" destroy-method="close">
-		<!--  
-		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
-		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe" />
-		-->
 		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy" />
 		<property name="url" value="jdbc:log4jdbc:oracle:thin:@localhost:1521:xe" />
-		<property name="username" value="sbatis" />
-		<property name="password" value="sbatis" />
+		<property name="username" value="SPRING" />
+		<property name="password" value="SPRING" />
 	</bean>
-	
 	<bean class="org.mybatis.spring.SqlSessionFactoryBean" id="sqlSessionFactory">
 		<property name="configLocation" value="classpath:config/mybatis-config.xml" />
 		<property name="dataSource" ref="dataSource" />
 	</bean>
-	
 	<bean class="org.mybatis.spring.SqlSessionTemplate" id="sqlSession">
 		<constructor-arg ref="sqlSessionFactory" />
 	</bean>
 	
-	<!-- AOP를 이용한 트랜잭션 처리 -->
-	<!-- 1) 트랜잭션 매니저 빈으로 등록 (dataSource 객체 필요함) -->
+	<!-- * 트랜잭션 처리용 aop를 위한 구문 -->
 	<bean class="org.springframework.jdbc.datasource.DataSourceTransactionManager" id="txManager">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
-	
-	<!-- 2) 트랜잭션 Advice 등록 -->
 	<tx:advice transaction-manager="txManager" id="txAdvice">
 		<tx:attributes>
-			<tx:method name="*" /> <!-- pointcut의 모든 메소드에서 실행하겠다. (삽입, 수정, 삭제, 목록조회, 상세조회) -->
-			<tx:method name="select*" read-only="true" /> <!-- 단, select로 시작하는 메소드는 실행하지 않겠다. (삽입, 수정, 삭제) -->
+			<tx:method name="*" /> 
+			<tx:method name="select*" read-only="true" /> 
 		</tx:attributes>
 	</tx:advice>
-	
-	<!-- 3) aop 등록 -->
 	<aop:config>
-		<aop:pointcut expression="execution(* com.br.sbatis.service.*Impl.*(..))" id="txPointcut" />
+		<aop:pointcut expression="execution(* com.br.spring.service.*Impl.*(..))" id="txPointcut" />
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut" />
 	</aop:config>
 	
-	
-	
+	<!-- * 파일업로드를 위한 빈 등록 -->
+	<!--   주의사항 : 빈 이름을 multipartResolver로 해야됨 -->
+	<bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver" id="multipartResolver">
+		<property name="maxUploadSizePerFile" value="10485760" /> <!-- 파일 한개당 10MB로 제한 -->
+		<property name="maxUploadSize" value="104857600" />			  <!-- 총 100MB로 제한 -->
+		<property name="defaultEncoding" value="UTF-8" />
+	</bean>
 		
 </beans>
