@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,12 +10,10 @@
 </head>
 <body>
 
-
-
-  <div class="container p-3">
+	<div class="container p-3">
 
     <!-- Header, Nav start -->
-		<jsp:include page="/WEB-INF/views/common/header.jsp" />
+    <jsp:include page="/WEB-INF/views/common/header.jsp" />
     <!-- Header, Nav end -->
 
     <!-- Section start -->
@@ -31,10 +29,9 @@
     <!-- Section end -->
 
     <!-- Footer start -->
-		<jsp:include page="/WEB-INF/views/common/footer.jsp" />
+    <jsp:include page="/WEB-INF/views/common/footer.jsp" />
     <!-- Footer end -->
 
   </div>
-  
 </body>
-</html>
+</html>c

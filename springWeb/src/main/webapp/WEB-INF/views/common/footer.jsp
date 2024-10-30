@@ -1,19 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+<c:set var="contextPath" value="${pageContext.request.contextPath}" />
+
 <style>
-    footer{
-        height: 200px;
-        border-top: 1px solid lightgray;
-    }
-    footer a{color:black}
-    .footer-info{
-        list-style: "-  ";
-        padding-left:30px;
-    }
-    .footer-copyright{text-align:center}
+  footer{
+    height: 200px;
+    border-top: 1px solid lightgray;
+  }
+  footer a{color:black}
+  .footer-info{
+    list-style: "-  ";
+    padding-left:30px;
+  }
+  .footer-copyright{text-align:center}
 </style>
+
 <footer class="m-3">
 <ul class="nav footer-link">
     <li class="nav-item">

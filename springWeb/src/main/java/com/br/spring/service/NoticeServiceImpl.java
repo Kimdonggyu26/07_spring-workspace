@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Service
 public class NoticeServiceImpl implements NoticeService {
-
-	private final NoticeDao noticeDao;
 	
+	private final NoticeDao noticeDao;
+
 }

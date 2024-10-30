@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Repository
 public class MemberDao {
-
+	
 	private final SqlSessionTemplate sqlSession;
 	
 	public MemberDto selectMember(MemberDto m) {
@@ -29,9 +29,22 @@ public class MemberDao {
 		return sqlSession.update("memberMapper.updateMember", m);
 	}
 	
+	public int updateProfileImg(MemberDto m) {
+		return sqlSession.update("memberMapper.updateProfileImg", m);
+	}
+	
 	public int deleteMember(String userId) {
 		return sqlSession.update("memberMapper.deleteMember", userId);
 	}
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+
 }

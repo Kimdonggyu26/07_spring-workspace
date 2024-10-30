@@ -36,6 +36,24 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
+		
+		<!-- * Spring Security 모듈 라이브러리 -->
+		<dependency>
+		    <groupId>org.springframework.security</groupId>
+		    <artifactId>spring-security-core</artifactId>
+		    <version>5.7.5</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.springframework.security</groupId>
+		    <artifactId>spring-security-web</artifactId>
+		    <version>5.7.5</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.springframework.security</groupId>
+		    <artifactId>spring-security-config</artifactId>
+		    <version>5.7.5</version>
+		</dependency>
+				
 				
 		<!-- * AspectJ (AOP를 위한 라이브러리) -->
 		<dependency>
@@ -99,7 +117,7 @@
 			<version>1.2</version>
 		</dependency>
 	
-		<!-- Test(Junit4, spring-test) -->
+		<!-- * Test (JUnit4, spring-test) -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -112,7 +130,7 @@
 		    <version>${org.springframework-version}</version>
 		    <scope>test</scope>
 		</dependency>
-		
+				
 		
 		<!-- * Lombok -->
 		<dependency>
@@ -173,8 +191,6 @@
 		    <version>2.11.0</version>
 		</dependency>
 				
-				
-				    
 	</dependencies>
 	
   <build>
