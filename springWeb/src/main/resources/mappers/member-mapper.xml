@@ -129,7 +129,13 @@
 		 where user_id = #{userId}
 	</update>
 
-
+	<update id="updatePwd">
+		update
+					 member
+		   set user_pwd = #{userPwd}
+		     , modify_date = sysdate
+		 where user_id = #{userId}
+	</update>
 
 
 

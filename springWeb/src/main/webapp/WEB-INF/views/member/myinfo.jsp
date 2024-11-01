@@ -17,7 +17,6 @@
 </style>
 </head>
 <body>
-
 	<div class="container p-3">
 
     <!-- Header, Nav start -->
@@ -100,6 +99,8 @@
             <div class="btns" align="center">
                 <button type="submit" class="btn btn-primary">수정하기</button>
                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteForm">회원탈퇴</button>
+                 <!-- * 비밀번호 변경 버튼 요소 --------------------------------------------------------------------- -->
+								<button type="button" class="btn btn-warning" data-toggle="modal"data-target="#updatePwdForm">비밀번호 변경</button>
             </div>
         </form>
       
@@ -113,6 +114,8 @@
     <!-- Footer end -->
   
   </div>
+
+
 
   <!-- 회원탈퇴 버튼 클릭시 보여질 Modal -->
   <div class="modal" id="deleteForm">
@@ -145,7 +148,67 @@
           </div>
       </div>
   </div>
-  
+ 
+
+<!-- * 비밀번호 변경 버튼 클릭시 띄워지는 비밀번호 변경 모달 --------------------------------------------- -->
+<div class="modal" id="updatePwdForm">
+
+    <div class="modal-dialog">
+
+      <div class="modal-content">
+
+ 
+
+        <div class="modal-header">
+
+          <h4 class="modal-title">비밀번호 변경</h4>
+
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+        </div>
+
+ 
+
+        <div class="modal-body" align="center">
+
+          <form action="${ contextPath }/member/updatePwd.do" method="post">
+
+            <table>
+
+              <tr>
+
+                <td>현재 비밀번호</td>
+
+                <td><input type="password" name="userPwd" required></td>
+
+              </tr>
+
+              <tr>
+
+                <td>변경할 비밀번호</td>
+
+                <td><input type="password" name="updatePwd" required></td>
+
+              </tr>
+
+            </table>
+
+            <br>
+
+            <button type="submit" class="btn btn-sm btn-secondary" >비밀번호 변경</button>
+
+          </form>
+
+        </div>
+
+ 
+
+      </div>
+
+    </div>
+
+  </div>
+
   
 	<script src="${ contextPath }/resources/js/fileValidate.js"></script>
 

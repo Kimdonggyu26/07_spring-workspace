@@ -22,5 +22,6 @@ public interface MemberService {
 	// 회원탈퇴
 	int deleteMember(String userId);
 	
-
+	// 비밀번호변경
+	int updatePwd(MemberDto m);
 }

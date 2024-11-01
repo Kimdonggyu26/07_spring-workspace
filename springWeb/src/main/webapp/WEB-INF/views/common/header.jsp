@@ -56,7 +56,7 @@ header .profile-img{width:30px;}
     <a class="nav-link" href="${ contextPath }">Home</a>
     </li>
     <li class="nav-item">
-    <a class="nav-link" href="#">공지사항</a>
+    <a class="nav-link" href="${ contextPath }/notice/list.do">공지사항</a>
     </li>
     <li class="nav-item">
     <a class="nav-link" href="${ contextPath }/board/list.do">일반게시판</a>

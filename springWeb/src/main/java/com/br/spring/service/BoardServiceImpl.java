@@ -1,5 +1,6 @@
 package com.br.spring.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -59,7 +60,7 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public int updateIncreaseCount(int boardNo) {
-		return 0;
+		return boardDao.updateIncreaseCount(boardNo);
 	}
 
 	@Override
@@ -69,17 +70,56 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public int deleteBoard(int boardNo) {
-		return 0;
+		return boardDao.deleteBoard(boardNo);
 	}
 
 	@Override
 	public List<ReplyDto> selectReplyList(int boardNo) {
-		return null;
+		return boardDao.selectReplyList(boardNo);
 	}
 
 	@Override
 	public int insertReply(ReplyDto r) {
-		return 0;
+		return boardDao.insertReply(r);
 	}
+
+	@Override
+	public List<AttachDto> selectDelAttach(String[] delFileNo) {
+		return delFileNo == null ? new ArrayList<>()
+								 : boardDao.selectDelAttach(delFileNo);
+	}
+
+	@Override
+	public int updateBoard(BoardDto b, String[] delFileNo) {
+		
+		// 1) board 테이블에 update
+		int result1 = boardDao.updateBoard(b);
+		
+		// 2) attachment 테이블에 delete
+		int result2 = 1;
+		if(result1 > 0 && delFileNo != null) {
+			result2 = boardDao.deleteAttach(delFileNo);
+		}
+		
+		// 3) attachment 테이블에 insert
+		List<AttachDto> list = b.getAttachList();
+		int result3 = 0;
+		
+		for(AttachDto at : list) {
+			result3 += boardDao.insertAttach(at);
+		}
+		 
+		
+		// 성공에 대한 조건
+		// result1이 1이어야됨
+		// result2가 0보다 커야됨
+		// result3가 list의 사이즈와 동일
+		
+		return result1 == 1 
+					&& result2 > 0
+					     && result3 == list.size()
+					     		? 1 : -1;
+	}
+	
 	
 }

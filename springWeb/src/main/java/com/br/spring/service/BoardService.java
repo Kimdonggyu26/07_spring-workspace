@@ -3,6 +3,7 @@ package com.br.spring.service;
 import java.util.List;
 import java.util.Map;
 
+import com.br.spring.dto.AttachDto;
 import com.br.spring.dto.BoardDto;
 import com.br.spring.dto.PageInfoDto;
 import com.br.spring.dto.ReplyDto;
@@ -30,13 +31,14 @@ public interface BoardService {
 	int deleteBoard(int boardNo);
 	
 	// 게시글 수정
+	List<AttachDto> selectDelAttach(String[] delFileNo);
+	int updateBoard(BoardDto b, String[] delFileNo);
 	
 	// 댓글 목록 조회
 	List<ReplyDto> selectReplyList(int boardNo);
 	
 	// 댓글 등록 
 	int insertReply(ReplyDto r);
-	
 	
 
 }

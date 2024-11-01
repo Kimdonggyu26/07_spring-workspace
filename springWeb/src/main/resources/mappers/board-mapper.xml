@@ -33,6 +33,13 @@
 		<result column="original_name" property="originalName" />
 	</resultMap>
 
+	<resultMap id="replyResultMap" type="ReplyDto">
+		<result column="reply_no" property="replyNo" />
+		<result column="user_id" property="replyWriter" />
+		<result column="reply_content" property="replyContent" />
+		<result column="regist_date" property="registDt" />
+	</resultMap>
+	
 	<select id="selectBoardListCount" resultType="_int">
 		select 
 					 count(*)
@@ -124,7 +131,14 @@
 		  , #{filesystemName}
 		  , #{originalName}
 		  , #{refType}
-		  , seq_bno.currval
+		  <choose>
+		  	<when test="refNo == 0">
+		  		, seq_bno.currval
+		  	</when>
+		  	<otherwise>
+		  		, #{refNo}
+		  	</otherwise>
+		  </choose>
 		  )
 	</insert>
 	
@@ -141,13 +155,90 @@
 	     , original_Name
 	  from board b
 	  join member on (user_no = board_writer)
-	  join attachment on (ref_type = 'B' and ref_no = board_no)
+	  left join attachment on (ref_type = 'B' and ref_no = board_no)
 	 where b.status = 'Y'
 	   and board_no = #{boardNo}
 	</select>
 
+	<update id="updateIncreaseCount">
+		update
+					 board
+			 set count = count + 1
+		 where board_no = #{boardNo}
+	</update>
 
-
+	<!-- join할땐 join member 하면 ( ? = ? ) member테이블의 컬럼을 왼쪽 ?에 넣는것이 속도가 빠름 -->
+	<select id="selectReplyList" resultMap="replyResultMap">
+		select
+					 reply_no
+				 , user_id
+				 , reply_content
+				 , to_char(regist_date, 'YYYY-MM-DD') regist_date
+		  from reply r
+		  join member on (user_no = reply_writer)
+		 where ref_bno = #{boardNo}
+		   and r.status = 'Y'
+		 order by reply_no desc
+	</select>
+	
+	<insert id="insertReply">
+		insert
+		  into reply
+		  (
+		  	reply_no
+		  , reply_content
+		  , ref_bno
+		  , reply_writer
+		  )
+		  values
+		  (
+		  	seq_rno.nextval
+		  , #{replyContent}
+		  , #{refBoardNo}
+		  , #{replyWriter}
+		  )
+		  
+	</insert>
+	
+	<update id="deleteBoard">
+		update
+					 board
+			 set status = 'N'
+		 where board_no = #{boardNo}
+	</update>
+	
+	<select id="selectDelAttach" resultMap="attachResultMap">
+		select
+					 file_path
+				 , filesystem_name
+			from attachment
+		 <where>
+		 		<foreach item="no" collection="array"
+		 		  open="file_no in (" separator="," close=")">
+		 		  #{no}
+		 		</foreach>
+		 </where>
+	</select>
+	
+	<update id="updateBoard">
+		update
+					 board
+			 set board_title = #{boardTitle}
+			 	 , board_content = #{boardContent}
+		 where board_no = #{boardNo}	 	   
+			 	   
+	</update>
+	
+	<delete id="deleteAttach">
+		delete
+			from attachment
+		<where>
+		 		<foreach item="no" collection="array"
+		 		  open="file_no in (" separator="," close=")">
+		 		  #{no}
+		 		</foreach>
+		</where>
+	</delete>
 
 
 

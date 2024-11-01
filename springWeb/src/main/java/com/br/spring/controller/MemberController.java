@@ -219,6 +219,44 @@ public class MemberController {
 		
 	}
 	
+	@PostMapping("/updatePwd.do")
+	public String updatePwd(String userPwd
+						, String updatePwd
+						, HttpSession session
+						, RedirectAttributes rdAttributes) {
+		
+		MemberDto loginUser = (MemberDto)session.getAttribute("loginUser");
+		
+		String userId = loginUser.getUserId();
+		
+		MemberDto m = (MemberDto)session.getAttribute("loginUser");
+		
+		// log.debug("암호화 전 pwd: {}", m.getUserPwd());
+		
+		// log.debug("로그인한 회원의 비밀번호 : {}", loginUser.getUserPwd());
+		// log.debug("확인용 비밀번호 : {}", userPwd);
+		
+		if(bcryptPwdEncoder.matches(userPwd, loginUser.getUserPwd())) {
+			
+			m.setUserPwd(bcryptPwdEncoder.encode(updatePwd));	// 변경할 비밀번호 암호화
+			
+			int result = memberService.updatePwd(m); // 비밀번호 변경용 서비스
+			
+			if(result > 0) {
+				session.setAttribute("loginUser", loginUser);	// session에 담기
+				rdAttributes.addFlashAttribute("alertMsg", "비밀번호가 성공적으로 변경되었습니다."); // 성공 메세지 출력 (alert)
+			}else {
+				rdAttributes.addFlashAttribute("alertMsg", "비밀번호 변경에 실패하였습니다."); // 비밀번호 변경 실패 메세지 출력 (alert)
+			}
+		}else {
+			rdAttributes.addFlashAttribute("alertMsg", "현재 비밀번호가 올바르지 않습니다. 다시 입력해주세요."); // 비밀번호 확인 실패 메세지 출력 (alert)
+		}
+		
+
+		 // log.debug("암호화 후 pwd: {}", m.getUserPwd());
+		
+		return "redirect:/member/myinfo.do";
+	}
 	
 	
 	
