@@ -17,6 +17,15 @@
 		</encoder>
 	</appender>
 	
+	<appender class="ch.qos.logback.core.ConsoleAppender" name="websocketLog">
+		<encoder>
+			<pattern>[%date{HH:mm:ss}] - %msg%n</pattern>
+		</encoder>
+	</appender>
+	
+
+
+	
 	<!-- 특정 조건을 넘어서면 새로운 파일로 로깅 -->
 	<appender class="ch.qos.logback.core.rolling.RollingFileAppender" name="rollingFileLog">
 		<!-- rollingPolicy : 어떤 조건으로 파일을 생성 또는 사라지게 할건지 보관정책 -->
@@ -35,6 +44,9 @@
 	<!-- 3) root logger와 logger 함께 사용하기 -->
 	<logger name="org.springframework" level="INFO" />
 	<logger name="com.br.spring" level="DEBUG" />
+	<logger name="com.br.spring.handler" level="DEBUG" additivity="false">
+		<appender-ref ref="websocketLog" />
+	</logger>
 	
 	<logger name="jdbc.sqlonly" level="off" />					<!-- 쿼리문 -->
 	<logger name="jdbc.sqltiming" level="INFO" /> 			<!-- 쿼리문 + 실행시간 -->

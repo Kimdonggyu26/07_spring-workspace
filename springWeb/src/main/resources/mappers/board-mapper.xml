@@ -239,6 +239,12 @@
 		 		</foreach>
 		</where>
 	</delete>
+	
+	<delete id="deleteReplyCompletely">
+		delete
+		  from reply
+		 where status = 'N'
+	</delete>
 
 
 

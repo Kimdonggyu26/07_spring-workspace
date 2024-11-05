@@ -2,10 +2,14 @@
 <beans:beans xmlns="http://www.springframework.org/schema/mvc"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:task="http://www.springframework.org/schema/task"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xsi:schemaLocation="http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd
+		http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+		">
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
@@ -23,6 +27,27 @@
 	
 	<context:component-scan base-package="com.br.spring" />
 	
+	<!-- webSocket 관련 등록 구문 -->
+	<beans:bean class="com.br.spring.handler.ChatEchoHandler" id="chatEchoHandler" />
+	<websocket:handlers>
+		<websocket:mapping handler="chatEchoHandler" path="/chat" />
+		<websocket:handshake-interceptors>
+			<beans:bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"></beans:bean>
+		</websocket:handshake-interceptors>
+		<websocket:sockjs />
+	</websocket:handlers>
+	
+	<!-- interceptor 관련 등록 구문 -->
+	<interceptors>
+		<interceptor>
+			<mapping path="/member/myinfo.do" />
+			<mapping path="/board/regist.do" />
+			<beans:bean class="com.br.spring.interceptor.LoginCheckInterceptor" id="loginCheckInterceptor" />
+		</interceptor>
+	</interceptors>
+	
+	
+	<task:annotation-driven />
 	
 	
 </beans:beans>
